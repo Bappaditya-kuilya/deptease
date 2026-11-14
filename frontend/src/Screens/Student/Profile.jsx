@@ -171,7 +171,7 @@ const Profile = ({ profileData }) => {
                 Name
               </label>
               <p className="mt-1.5 text-[#16181D]">
-                {profileData.emergencyContact.name}
+                {profileData.emergencyContact?.name}
               </p>
             </div>
             <div>
@@ -179,7 +179,7 @@ const Profile = ({ profileData }) => {
                 Relationship
               </label>
               <p className="mt-1.5 text-[#16181D]">
-                {profileData.emergencyContact.relationship}
+                {profileData.emergencyContact?.relationship}
               </p>
             </div>
             <div>
@@ -187,7 +187,7 @@ const Profile = ({ profileData }) => {
                 Phone
               </label>
               <p className="mt-1.5 text-[#16181D]">
-                {profileData.emergencyContact.phone}
+                {profileData.emergencyContact?.phone}
               </p>
             </div>
           </div>

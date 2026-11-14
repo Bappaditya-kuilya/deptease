@@ -5,14 +5,10 @@ const getMarksController = async (req, res) => {
   try {
     const { studentId, semester, examId } = req.query;
 
-    const query = { student: studentId };
-    if (semester) {
-      query.semester = semester;
-    }
-
-    if (examId) {
-      query.examId = examId;
-    }
+    const query = {};
+    if (studentId) query.student = studentId;
+    if (semester) query.semester = semester;
+    if (examId) query.examId = examId;
 
     const marks = await Marks.find(query)
       .populate("branch", "name")

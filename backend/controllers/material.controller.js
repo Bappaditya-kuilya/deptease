@@ -15,7 +15,7 @@ const getMaterialsController = async (req, res) => {
 
     const materials = await Material.find(query)
       .populate("subject")
-      .populate("faculty")
+      .populate("faculty", "-password")
       .populate("branch")
       .sort({ createdAt: -1 });
 
@@ -61,7 +61,7 @@ const addMaterialController = async (req, res) => {
 
     const populatedMaterial = await Material.findById(material._id)
       .populate("subject")
-      .populate("faculty")
+      .populate("faculty", "-password")
       .populate("branch");
 
     return ApiResponse.created(
@@ -112,7 +112,7 @@ const updateMaterialController = async (req, res) => {
       new: true,
     })
       .populate("subject")
-      .populate("faculty")
+      .populate("faculty", "-password")
       .populate("branch");
 
     return ApiResponse.success(

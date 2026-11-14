@@ -518,7 +518,7 @@ const Admin = () => {
                       </label>
                       <input
                         type="text"
-                        value={data.emergencyContact.name}
+                        value={data.emergencyContact?.name}
                         onChange={(e) =>
                           handleEmergencyContactChange("name", e.target.value)
                         }
@@ -533,7 +533,7 @@ const Admin = () => {
                       </label>
                       <input
                         type="text"
-                        value={data.emergencyContact.relationship}
+                        value={data.emergencyContact?.relationship}
                         onChange={(e) =>
                           handleEmergencyContactChange(
                             "relationship",
@@ -551,7 +551,7 @@ const Admin = () => {
                       </label>
                       <input
                         type="tel"
-                        value={data.emergencyContact.phone}
+                        value={data.emergencyContact?.phone}
                         onChange={(e) =>
                           handleEmergencyContactChange("phone", e.target.value)
                         }
