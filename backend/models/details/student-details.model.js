@@ -89,11 +89,10 @@ const studentDetailsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-studentDetailsSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
+studentDetailsSchema.pre("save", async function () {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
   }
-  this.password = await bcrypt.hash(this.password, 10);
 });
 
 const studentDetails = mongoose.model("StudentDetail", studentDetailsSchema);

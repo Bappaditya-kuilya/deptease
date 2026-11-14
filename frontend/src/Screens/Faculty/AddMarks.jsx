@@ -172,10 +172,10 @@ const AddMarks = () => {
         toast.success("Marks found!");
         const combinedData = students.map((student) => {
           const marks = response.data.data.find(
-            (mark) => mark.student._id === student._id
+            (mark) => mark.studentId?._id === student._id
           );
           if (marks) {
-            return { ...student, obtainedMarks: marks.obtainedMarks };
+            return { ...student, obtainedMarks: marks.marksObtained };
           } else {
             return { ...student, obtainedMarks: 0 };
           }

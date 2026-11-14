@@ -93,11 +93,10 @@ const facultyDetailsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-facultyDetailsSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
+facultyDetailsSchema.pre("save", async function () {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
   }
-  this.password = await bcrypt.hash(this.password, 10);
 });
 
 const facultyDetails = mongoose.model("FacultyDetail", facultyDetailsSchema);

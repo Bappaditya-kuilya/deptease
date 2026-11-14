@@ -92,11 +92,10 @@ const adminDetailsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-adminDetailsSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
+adminDetailsSchema.pre("save", async function () {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
   }
-  this.password = await bcrypt.hash(this.password, 10);
 });
 
 const adminDetails = mongoose.model("AdminDetail", adminDetailsSchema);

@@ -43,6 +43,16 @@ app.use("/api/material", require("./routes/material.route"));
 app.use("/api/exam", require("./routes/exam.route"));
 app.use("/api/marks", require("./routes/marks.route"));
 
+// Last line of defense: return JSON, never an opaque HTML 500.
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({
+    success: false,
+    message: err.message || "Internal server error",
+    data: null,
+  });
+});
+
 // Listen only when run directly (local dev); Vercel uses the exported handler.
 if (process.env.VERCEL !== "1") {
   const port = process.env.PORT || 4000;

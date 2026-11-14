@@ -11,9 +11,9 @@ const getMarksController = async (req, res) => {
     if (examId) query.examId = examId;
 
     const marks = await Marks.find(query)
-      .populate("branch", "name")
-      .populate("marks.subject", "name")
-      .populate("student", "firstName lastName enrollmentNo");
+      .populate("studentId", "firstName lastName enrollmentNo")
+      .populate("subjectId", "name")
+      .populate("examId", "name examDate");
 
     if (!marks || marks.length === 0) {
       return res.status(200).json({
