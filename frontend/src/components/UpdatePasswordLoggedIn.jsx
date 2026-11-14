@@ -1,0 +1,123 @@
+import React, { useState } from "react";
+import { toast } from "react-hot-toast";
+import axiosWrapper from "../utils/AxiosWrapper";
+import { IoMdClose } from "react-icons/io";
+import CustomButton from "./CustomButton";
+
+const UpdatePasswordLoggedIn = ({ onClose }) => {
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const userToken = localStorage.getItem("userToken");
+  const userType = localStorage.getItem("userType");
+
+  const handlePasswordUpdate = async (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+      toast.error("New passwords do not match");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      toast.error("Password must be at least 8 characters long");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await axiosWrapper.post(
+        `/${userType.toLowerCase()}/change-password`,
+        {
+          currentPassword,
+          newPassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      if (response.data.success) {
+        toast.success("Password updated successfully");
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update password");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <section className="w-full h-full flex justify-center items-center bg-black/40 backdrop-blur-sm fixed top-0 left-0 z-50">
+      <div className="fade-up max-w-md mx-auto mt-8 p-6 bg-white border border-[#E4E6EA] rounded-2xl shadow-[0_16px_48px_rgba(16,24,40,0.16)] w-full">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-display font-semibold text-[#16181D]">
+            Update Password
+          </h2>
+          <CustomButton
+            onClick={onClose}
+            variant="danger"
+            className="!p-2 rounded-full"
+          >
+            <IoMdClose className="text-2xl" />
+          </CustomButton>
+        </div>
+        <form onSubmit={handlePasswordUpdate}>
+          <div className="mb-4">
+            <label className="block text-[#6E7178] text-sm font-medium mb-2">
+              Current Password
+            </label>
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              className="w-full px-3 py-2 rounded-2xl bg-white border border-[#E4E6EA] text-[#16181D] placeholder:text-[#6E7178] focus:outline-none focus:ring-2 focus:ring-[#FFB020] focus:border-[#FFB020]"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-[#6E7178] text-sm font-medium mb-2">
+              New Password
+            </label>
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full px-3 py-2 rounded-2xl bg-white border border-[#E4E6EA] text-[#16181D] placeholder:text-[#6E7178] focus:outline-none focus:ring-2 focus:ring-[#FFB020] focus:border-[#FFB020]"
+              required
+            />
+          </div>
+          <div className="mb-6">
+            <label className="block text-[#6E7178] text-sm font-medium mb-2">
+              Confirm New Password
+            </label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full px-3 py-2 rounded-2xl bg-white border border-[#E4E6EA] text-[#16181D] placeholder:text-[#6E7178] focus:outline-none focus:ring-2 focus:ring-[#FFB020] focus:border-[#FFB020]"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full bg-[#1A1D21] text-white font-semibold py-2 px-4 rounded-full hover:bg-black transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Updating..." : "Update Password"}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default UpdatePasswordLoggedIn;

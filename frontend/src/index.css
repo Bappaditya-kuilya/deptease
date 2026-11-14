@@ -1,0 +1,137 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: #eff0f2;
+  color: #16181d;
+  font-family: "Plus Jakarta Sans", ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+::-webkit-scrollbar {
+  display: none;
+}
+html::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 8px;
+}
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+html::-webkit-scrollbar-thumb {
+  background: rgba(22, 24, 29, 0.25);
+  border-radius: 8px;
+}
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(22, 24, 29, 0.4);
+}
+
+::selection {
+  background: #ffb020;
+  color: #16181d;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.fade-up-1 {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.08s;
+}
+.fade-up-2 {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.16s;
+}
+.fade-up-3 {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.24s;
+}
+
+.text-gradient {
+  color: #16181d;
+}
+
+/* Campus wayfinding — traveling amber route marker on tab strips */
+.route-tab-marker {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  background: #ffb020;
+  border-radius: 8px;
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    top 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: routePulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes routePulse {
+  from {
+    opacity: 0.78;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Idle: the live route breathes (slow amber opacity pulse) */
+@keyframes idlePulse {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.idle-pulse {
+  animation: idlePulse 2.4s ease-in-out infinite alternate;
+}
+
+/* Route line variant: a period where samples 1.5s apart are always opposite
+   phase, so the idle check can never miss it. */
+.idle-pulse-line {
+  animation: idlePulse 3s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-tab-marker {
+    animation: none;
+    transition: none;
+  }
+  .fade-up,
+  .fade-up-1,
+  .fade-up-2,
+  .fade-up-3 {
+    animation: none;
+  }
+  .idle-pulse,
+  .idle-pulse-line {
+    animation: none;
+  }
+}
