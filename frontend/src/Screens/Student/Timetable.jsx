@@ -1,4 +1,5 @@
 import axios from "axios";
+import { mediaSrc } from "../../utils/mediaSrc";
 import React, { useEffect, useState } from "react";
 import { FiDownload } from "react-icons/fi";
 import Heading from "../../components/Heading";
@@ -52,7 +53,7 @@ const Timetable = () => {
           <p
             className="flex justify-center items-center gap-2 rounded-full px-5 py-2.5 bg-[#1A1D21] text-white font-medium text-sm cursor-pointer hover:opacity-90 active:scale-95 transition"
             onClick={() =>
-              window.open(process.env.REACT_APP_MEDIA_LINK + "/" + timetable)
+              window.open(mediaSrc(timetable))
             }
           >
             Download
@@ -66,7 +67,7 @@ const Timetable = () => {
       {!dataLoading && timetable && (
         <img
           className="mt-8 rounded-2xl border border-[#E4E6EA] bg-white p-2 shadow-[0_1px_3px_rgba(16,24,40,0.06)] w-[70%] mx-auto"
-          src={process.env.REACT_APP_MEDIA_LINK + "/" + timetable}
+          src={mediaSrc(timetable)}
           alt="timetable"
         />
       )}

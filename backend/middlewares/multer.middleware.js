@@ -1,15 +1,10 @@
 const multer = require("multer");
-const path = require("path");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "./media");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
+// Keep uploads in memory and persist them as data URIs in MongoDB.
+// (Vercel serverless has a read-only filesystem; disk storage crashes there.)
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
-
-const upload = multer({ storage: storage });
 
 module.exports = upload;

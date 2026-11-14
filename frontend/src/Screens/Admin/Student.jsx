@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { mediaSrc } from "../../utils/mediaSrc";
 import { toast } from "react-hot-toast";
 import { MdOutlineDelete, MdEdit } from "react-icons/md";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
@@ -453,7 +454,7 @@ const Student = () => {
                       >
                         <td className="px-6 py-4">
                           <img
-                            src={`${process.env.REACT_APP_MEDIA_LINK}/${student.profile}`}
+                            src={mediaSrc(student.profile)}
                             alt={`${student.firstName}'s profile`}
                             className="w-12 h-12 object-cover rounded-full ring-2 ring-white/10"
                             onError={(e) => {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { mediaSrc } from "../../utils/mediaSrc";
 import CustomButton from "../../components/CustomButton";
 import Reveal from "../../components/Reveal";
 import UpdatePasswordLoggedIn from "../../components/UpdatePasswordLoggedIn";
@@ -24,7 +25,7 @@ const Profile = ({ profileData }) => {
       >
         <div className="flex items-center gap-8">
           <img
-            src={`${process.env.REACT_APP_MEDIA_LINK}/${profileData.profile}`}
+            src={mediaSrc(profileData.profile)}
             alt="Profile"
             className="w-40 h-40 rounded-full object-cover ring-4 ring-[#FFB020]/60 ring-offset-4 ring-offset-[#EFF0F2] border border-[#E4E6EA]"
           />

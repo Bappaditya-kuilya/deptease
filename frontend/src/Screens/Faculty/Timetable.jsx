@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { mediaSrc } from "../../utils/mediaSrc";
 import { FiUpload } from "react-icons/fi";
 import { MdOutlineDelete, MdEdit, MdViewComfy, MdLink } from "react-icons/md";
 import { IoMdAdd, IoMdClose } from "react-icons/io";
@@ -291,7 +292,7 @@ const Timetable = () => {
                 <td className="py-4 px-6 text-[#6E7178]">
                   <a
                     className="text-xl text-[#B45309] hover:text-[#B45309] transition-colors"
-                    href={process.env.REACT_APP_MEDIA_LINK + "/" + item.link}
+                    href={mediaSrc(item.link)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

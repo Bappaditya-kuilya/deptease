@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { mediaSrc } from "../../utils/mediaSrc";
 import { MdLink } from "react-icons/md";
 import Heading from "../../components/Heading";
 import { useSelector } from "react-redux";
@@ -170,7 +171,7 @@ const Material = () => {
                         variant="primary"
                         onClick={() => {
                           window.open(
-                            `${process.env.REACT_APP_MEDIA_LINK}/${material.file}`
+                            mediaSrc(material.file)
                           );
                         }}
                       >

@@ -3,6 +3,7 @@ const resetToken = require("../../models/reset-password.model");
 const bcrypt = require("bcryptjs");
 const ApiResponse = require("../../utils/ApiResponse");
 const jwt = require("jsonwebtoken");
+const fileToDataUri = require("../../utils/fileToDataUri");
 const sendResetMail = require("../../utils/SendMail");
 
 const loginFacultyController = async (req, res) => {
@@ -50,7 +51,7 @@ const generateEmployeeId = () => {
 const registerFacultyController = async (req, res) => {
   try {
     const { email, phone } = req.body;
-    const profile = req.file ? req.file.filename : undefined;
+    const profile = req.file ? fileToDataUri(req.file) : undefined;
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return ApiResponse.badRequest("Invalid email format").send(res);
@@ -140,7 +141,7 @@ const updateFacultyController = async (req, res) => {
     }
 
     if (req.file) {
-      updateData.profile = req.file.filename;
+      updateData.profile = fileToDataUri(req.file);
     }
 
     if (updateData.dob) updateData.dob = new Date(updateData.dob);

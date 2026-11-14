@@ -3,6 +3,7 @@ const resetToken = require("../../models/reset-password.model");
 const bcrypt = require("bcryptjs");
 const ApiResponse = require("../../utils/ApiResponse");
 const jwt = require("jsonwebtoken");
+const fileToDataUri = require("../../utils/fileToDataUri");
 const sendResetMail = require("../../utils/SendMail");
 
 const loginAdminController = async (req, res, next) => {
@@ -55,7 +56,7 @@ const registerAdminController = async (req, res, next) => {
   try {
     const { email, phone } = req.body;
 
-    const profile = req.file ? req.file.filename : undefined;
+    const profile = req.file ? fileToDataUri(req.file) : undefined;
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return ApiResponse.badRequest("Invalid email format").send(res);
@@ -163,7 +164,7 @@ const updateDetailsController = async (req, res, next) => {
     }
 
     if (req.file) {
-      updateData.profile = req.file.filename;
+      updateData.profile = fileToDataUri(req.file);
     }
 
     if (updateData.dob) {

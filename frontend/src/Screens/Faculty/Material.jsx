@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { mediaSrc } from "../../utils/mediaSrc";
 import React, { useEffect, useState } from "react";
 import { FiUpload, FiEdit2, FiTrash2 } from "react-icons/fi";
 import Heading from "../../components/Heading";
@@ -348,7 +349,7 @@ const Material = () => {
                       variant="primary"
                       onClick={() => {
                         window.open(
-                          `${process.env.REACT_APP_MEDIA_LINK}/${material.file}`
+                          mediaSrc(material.file)
                         );
                       }}
                     >

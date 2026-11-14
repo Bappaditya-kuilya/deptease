@@ -1,4 +1,5 @@
 const Timetable = require("../models/timetable.model");
+const fileToDataUri = require("../utils/fileToDataUri");
 const ApiResponse = require("../utils/ApiResponse");
 
 const getTimetableController = async (req, res) => {
@@ -49,7 +50,7 @@ const addTimetableController = async (req, res) => {
         {
           semester,
           branch,
-          link: req.file.filename,
+          link: fileToDataUri(req.file),
         },
         { new: true }
       );
@@ -62,7 +63,7 @@ const addTimetableController = async (req, res) => {
     timetable = await Timetable.create({
       semester,
       branch,
-      link: req.file.filename,
+      link: fileToDataUri(req.file),
     });
 
     return ApiResponse.created(timetable, "Timetable added successfully").send(
@@ -88,7 +89,7 @@ const updateTimetableController = async (req, res) => {
       {
         semester,
         branch,
-        link: req.file ? req.file.filename : undefined,
+        link: req.file ? fileToDataUri(req.file) : undefined,
       },
       { new: true }
     );

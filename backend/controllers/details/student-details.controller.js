@@ -3,6 +3,7 @@ const resetToken = require("../../models/reset-password.model");
 const bcrypt = require("bcryptjs");
 const ApiResponse = require("../../utils/ApiResponse");
 const jwt = require("jsonwebtoken");
+const fileToDataUri = require("../../utils/fileToDataUri");
 const sendResetMail = require("../../utils/SendMail");
 
 const loginStudentController = async (req, res) => {
@@ -52,7 +53,7 @@ const getAllDetailsController = async (req, res) => {
 
 const registerStudentController = async (req, res) => {
   try {
-    const profile = req.file ? req.file.filename : undefined;
+    const profile = req.file ? fileToDataUri(req.file) : undefined;
 
     const enrollmentNo = Math.floor(100000 + Math.random() * 900000);
     const email = `${enrollmentNo}@gmail.com`;
@@ -160,7 +161,7 @@ const updateDetailsController = async (req, res) => {
     }
 
     if (req.file) {
-      updateData.profile = req.file.filename;
+      updateData.profile = fileToDataUri(req.file);
     }
 
     if (updateData.dob) {

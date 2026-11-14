@@ -1,4 +1,5 @@
 const Material = require("../models/material.model");
+const fileToDataUri = require("../utils/fileToDataUri");
 const ApiResponse = require("../utils/ApiResponse");
 
 const getMaterialsController = async (req, res) => {
@@ -55,7 +56,7 @@ const addMaterialController = async (req, res) => {
       semester,
       branch,
       type,
-      file: req.file.filename,
+      file: fileToDataUri(req.file),
     });
 
     const populatedMaterial = await Material.findById(material._id)
@@ -105,7 +106,7 @@ const updateMaterialController = async (req, res) => {
       }
       updateData.type = type;
     }
-    if (req.file) updateData.file = req.file.filename;
+    if (req.file) updateData.file = fileToDataUri(req.file);
 
     const updatedMaterial = await Material.findByIdAndUpdate(id, updateData, {
       new: true,
