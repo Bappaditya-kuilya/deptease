@@ -101,10 +101,12 @@ const Home = () => {
     const loadStats = async () => {
       const headers = { headers: { Authorization: `Bearer ${userToken}` } };
       try {
-        const response = await axiosWrapper.get(`/branch/stats`, headers);
+        const [response, facultyResponse] = await Promise.all([
+          axiosWrapper.get(`/branch/stats`, headers),
+          axiosWrapper.get(`/faculty`, headers),
+        ]);
         const payload = response.data?.data;
         if (response.data?.success && payload) {
-          const facultyResponse = await axiosWrapper.get(`/faculty`, headers);
           const branches = payload.branches || [];
           setStats({
             students: payload.totalStudents || 0,
