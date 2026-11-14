@@ -120,7 +120,7 @@ const Exam = () => {
       }
     } catch (error) {
       toast.dismiss();
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Error");
     } finally {
       setProcessLoading(false);
     }
@@ -179,7 +179,7 @@ const Exam = () => {
       }
     } catch (error) {
       toast.dismiss();
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "Error");
     }
   };
 

@@ -87,7 +87,7 @@ const Admin = () => {
               data.emergencyContact[subKey]
             );
           }
-        } else {
+        } else if (key !== "profile") {
           formData.append(key, data[key]);
         }
       }

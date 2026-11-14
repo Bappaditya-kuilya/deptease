@@ -293,13 +293,13 @@ const Timetable = () => {
                   <a
                     className="text-xl text-[#B45309] hover:text-[#B45309] transition-colors"
                     href={mediaSrc(item.link)}
-                    target="_blank"
+                    download={`timetable-sem${item.semester}`}
                     rel="noopener noreferrer"
                   >
                     <MdLink />
                   </a>
                 </td>
-                <td className="py-4 px-6 text-[#6E7178]">{item.branch.name}</td>
+                <td className="py-4 px-6 text-[#6E7178]">{item.branch?.name}</td>
                 <td className="py-4 px-6 text-[#6E7178] font-['Plus Jakarta Sans']">
                   {item.semester}
                 </td>

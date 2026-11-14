@@ -50,17 +50,16 @@ const Timetable = () => {
       <div className="flex justify-between items-center w-full gap-4 flex-wrap">
         <Heading title={`Timetable of Semester ${userData.semester}`} />
         {!dataLoading && timetable && (
-          <p
+          <a
+            href={mediaSrc(timetable)}
+            download="timetable"
             className="flex justify-center items-center gap-2 rounded-full px-5 py-2.5 bg-[#1A1D21] text-white font-medium text-sm cursor-pointer hover:opacity-90 active:scale-95 transition"
-            onClick={() =>
-              window.open(mediaSrc(timetable))
-            }
           >
             Download
             <span className="ml-2">
               <FiDownload />
             </span>
-          </p>
+          </a>
         )}
       </div>
       {dataLoading && <Loading />}

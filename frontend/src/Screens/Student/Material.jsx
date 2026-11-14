@@ -30,7 +30,7 @@ const Material = () => {
     try {
       setDataLoading(true);
       const response = await axiosWrapper.get(
-        `/subject?semester=${userData.semester}&branch=${userData.branchId._id}`,
+        `/subject?semester=${userData.semester}&branch=${userData.branchId?._id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const Material = () => {
       setDataLoading(true);
       const queryParams = new URLSearchParams({
         semester: userData.semester,
-        branch: userData.branchId._id,
+        branch: userData.branchId?._id,
       });
 
       if (filters.subject) queryParams.append("subject", filters.subject);
@@ -167,22 +167,20 @@ const Material = () => {
                     className="border-b border-[#EEF0F3] last:border-b-0 hover:bg-[#FAFBFC] transition-colors"
                   >
                     <td className="py-4 px-6">
-                      <CustomButton
-                        variant="primary"
-                        onClick={() => {
-                          window.open(
-                            mediaSrc(material.file)
-                          );
-                        }}
-                      >
-                        <MdLink className="text-xl" />
-                      </CustomButton>
+                      <a
+                      href={mediaSrc(material.file)}
+                      download={material.title || "material"}
+                      className="px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 bg-[#1A1D21] text-white font-semibold hover:bg-black inline-flex items-center justify-center"
+                      title="Download material"
+                    >
+                      <MdLink className="text-xl" />
+                    </a>
                     </td>
                     <td className="py-4 px-6 font-medium text-[#16181D]">
                       {material.title}
                     </td>
                     <td className="py-4 px-6 text-[#6E7178]">
-                      {material.subject.name}
+                      {material.subject?.name}
                     </td>
                     <td className="py-4 px-6 capitalize">
                       <span className="rounded-full border border-[#E4E6EA] bg-[#EFF0F2] px-2.5 py-1 text-xs uppercase tracking-widest text-[#6E7178]">

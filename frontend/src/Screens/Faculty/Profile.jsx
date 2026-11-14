@@ -105,7 +105,7 @@ const Profile = ({ profileData }) => {
                 Salary
               </label>
               <p className="text-[#16181D]">
-                ₹{profileData.salary.toLocaleString()}
+                ₹{profileData.salary?.toLocaleString?.() ?? "-"}
               </p>
             </div>
             <div>

@@ -39,7 +39,7 @@ const Profile = ({ profileData }) => {
               </span>
             </p>
             <p className="text-lg font-medium text-[#16181D]">
-              {profileData.branchId.name}
+              {profileData.branchId?.name}
             </p>
           </div>
         </div>

@@ -174,10 +174,12 @@ const Material = () => {
       }
 
       if (editingMaterial) {
-        await axiosWrapper.put(
-          `/material/${editingMaterial._id}`,
-          formDataToSend
-        );
+        await axiosWrapper.put(`/material/${editingMaterial._id}`, formDataToSend, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        });
         toast.success("Material updated successfully");
       } else {
         await axiosWrapper.post("/material", formDataToSend, {
@@ -204,9 +206,9 @@ const Material = () => {
     setEditingMaterial(material);
     setFormData({
       title: material.title,
-      subject: material.subject._id,
+      subject: material.subject?._id,
       semester: material.semester,
-      branch: material.branch._id,
+      branch: material.branch?._id,
       type: material.type,
     });
     setShowModal(true);
@@ -345,21 +347,19 @@ const Material = () => {
                   className="border-b border-[#EEF0F3] hover:bg-white/5 transition-colors"
                 >
                   <td className="py-4 px-6 text-[#6E7178]">
-                    <CustomButton
-                      variant="primary"
-                      onClick={() => {
-                        window.open(
-                          mediaSrc(material.file)
-                        );
-                      }}
+                    <a
+                      href={mediaSrc(material.file)}
+                      download={material.title || "material"}
+                      className="px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 bg-[#1A1D21] text-white font-semibold hover:bg-black inline-flex items-center justify-center"
+                      title="Download material"
                     >
                       <MdLink className="text-xl" />
-                    </CustomButton>
+                    </a>
                   </td>
                   <td className="py-4 px-6 text-[#6E7178]">{material.title}</td>
-                  <td className="py-4 px-6 text-[#6E7178]">{material.subject.name}</td>
+                  <td className="py-4 px-6 text-[#6E7178]">{material.subject?.name}</td>
                   <td className="py-4 px-6 text-[#6E7178]">{material.semester}</td>
-                  <td className="py-4 px-6 text-[#6E7178]">{material.branch.name}</td>
+                  <td className="py-4 px-6 text-[#6E7178]">{material.branch?.name}</td>
                   <td className="py-4 px-6 text-[#6E7178] capitalize">{material.type}</td>
                   <td className="py-4 px-6 text-[#6E7178]">
                     <div className="flex gap-4">

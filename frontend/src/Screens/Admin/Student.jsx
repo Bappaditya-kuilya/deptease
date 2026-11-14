@@ -168,7 +168,7 @@ const Student = () => {
               formData.emergencyContact[subKey]
             );
           }
-        } else {
+        } else if (key !== "profile") {
           formDataToSend.append(key, formData[key]);
         }
       }
