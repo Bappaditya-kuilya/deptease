@@ -5,7 +5,7 @@ const path = require("path");
 const cors = require("cors");
 
 // Connect on cold start (Vercel serverless) or at boot (local).
-connectToMongo();
+connectToMongo().catch((err) => console.error("MongoDB connect error:", err.message));
 
 app.use(
   cors({
@@ -15,8 +15,14 @@ app.use(
 
 app.use(express.json()); //to convert request data to json
 
-// Ensure DB is connected before handling requests (serverless cold-start safety)
-app.use(async (req, res, next) => {
+app.get("/", (req, res) => {
+  res.send("Hello 👋 I am Working Fine 🚀");
+});
+
+app.use("/media", express.static(path.join(__dirname, "media")));
+
+// Ensure DB is connected before handling API requests (serverless cold-start safety)
+app.use("/api", async (req, res, next) => {
   try {
     await connectToMongo();
     next();
@@ -24,12 +30,6 @@ app.use(async (req, res, next) => {
     res.status(503).json({ success: false, message: "Database unavailable", data: null });
   }
 });
-
-app.get("/", (req, res) => {
-  res.send("Hello 👋 I am Working Fine 🚀");
-});
-
-app.use("/media", express.static(path.join(__dirname, "media")));
 
 app.use("/api/admin", require("./routes/details/admin-details.route"));
 app.use("/api/faculty", require("./routes/details/faculty-details.route"));

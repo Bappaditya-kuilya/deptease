@@ -10,6 +10,9 @@ if (!cached) {
 }
 
 const connectToMongo = async () => {
+  if (!mongoURI) {
+    throw new Error("MONGODB_URI is not set");
+  }
   if (cached.conn) return cached.conn;
   if (!cached.promise) {
     cached.promise = mongoose
