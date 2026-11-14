@@ -191,7 +191,7 @@ All under `/api`: `/api/admin`, `/api/faculty`, `/api/student` (login/register/p
 ## Project Structure
 
 ```
-student-department-management-system/
+dept-easeflower/
 ├── backend/
 │   ├── controllers/          # route handlers
 │   ├── models/               # Mongoose schemas (details/, branch, subject, …)
@@ -206,9 +206,17 @@ student-department-management-system/
 └── README.md
 ```
 
-## Contributing
+## Design
 
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+DeptEase uses a **light, ROVA-inspired product UI** built around Plus Jakarta Sans, white cards, soft shadows, and near-black active pills:
+
+- **Ground** `#EFF0F2` — page background
+- **Plate** `#FFFFFF` — cards, panels, modals
+- **Ink** `#16181D` — primary text
+- **Active pill** `#1A1D21` — primary CTAs, active tabs
+- **Accent** `#FFB020` — status chips, route line; AA-safe text amber `#B45309`
+
+See [`DESIGN.md`](DESIGN.md) for the full design contract, motion rules, and QA checklist.
 
 ## License
 
