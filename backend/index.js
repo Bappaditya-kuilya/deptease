@@ -2,9 +2,10 @@ const connectToMongo = require("./Database/db");
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require("cors");
+
+// Connect on cold start (Vercel serverless) or at boot (local).
 connectToMongo();
-const port = 4000 || process.env.PORT;
-var cors = require("cors");
 
 app.use(
   cors({
@@ -13,6 +14,16 @@ app.use(
 );
 
 app.use(express.json()); //to convert request data to json
+
+// Ensure DB is connected before handling requests (serverless cold-start safety)
+app.use(async (req, res, next) => {
+  try {
+    await connectToMongo();
+    next();
+  } catch (error) {
+    res.status(503).json({ success: false, message: "Database unavailable", data: null });
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("Hello 👋 I am Working Fine 🚀");
@@ -32,6 +43,12 @@ app.use("/api/material", require("./routes/material.route"));
 app.use("/api/exam", require("./routes/exam.route"));
 app.use("/api/marks", require("./routes/marks.route"));
 
-app.listen(port, () => {
-  console.log(`Server Listening On http://localhost:${port}`);
-});
+// Listen only when run directly (local dev); Vercel uses the exported handler.
+if (process.env.VERCEL !== "1") {
+  const port = process.env.PORT || 4000;
+  app.listen(port, () => {
+    console.log(`Server Listening On http://localhost:${port}`);
+  });
+}
+
+module.exports = app;
