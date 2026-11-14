@@ -4,11 +4,22 @@ const Student = require("../models/details/student-details.model");
 const getMarksController = async (req, res) => {
   try {
     const { studentId, semester, examId } = req.query;
+    const mongoose = require("mongoose");
 
     const query = {};
-    if (studentId) query.student = studentId;
-    if (semester) query.semester = semester;
-    if (examId) query.examId = examId;
+    if (studentId) {
+      if (!mongoose.isValidObjectId(studentId)) {
+        return res.status(400).json({ success: false, message: "Invalid studentId", data: null });
+      }
+      query.studentId = studentId;
+    }
+    if (semester) query.semester = Number(semester);
+    if (examId) {
+      if (!mongoose.isValidObjectId(examId)) {
+        return res.status(400).json({ success: false, message: "Invalid examId", data: null });
+      }
+      query.examId = examId;
+    }
 
     const marks = await Marks.find(query)
       .populate("studentId", "firstName lastName enrollmentNo")
