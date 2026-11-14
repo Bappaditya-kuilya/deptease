@@ -95,8 +95,10 @@ const Exam = () => {
       formData.append("semester", data.semester);
       formData.append("examType", data.examType);
       formData.append("totalMarks", data.totalMarks);
-      if (isEditing) {
+      if (file) {
         formData.append("file", file);
+      }
+      if (isEditing) {
         response = await axiosWrapper.patch(
           `/exam/${selectedExamId}`,
           formData,
@@ -105,7 +107,6 @@ const Exam = () => {
           }
         );
       } else {
-        formData.append("file", file);
         response = await axiosWrapper.post(`/exam`, formData, {
           headers: headers,
         });
@@ -405,7 +406,6 @@ const Exam = () => {
                       type="file"
                       onChange={handleFileChange}
                       className="hidden"
-                      required={!isEditing}
                     />
                   </label>
                   {file && (

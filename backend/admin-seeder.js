@@ -30,123 +30,215 @@ const subjectTemplates = [
   { name: "Digital Electronics", code: "DE", semester: 3, credits: 4 },
 ];
 
-const studentTemplates = [
-  {
-    firstName: "Aarav",
-    middleName: "Kumar",
-    lastName: "Mehta",
-    email: "aarav.mehta@example.com",
-    profile: "Aarav_Mehta.svg",
-    phone: "9876501001",
-    semester: 1,
-    gender: "male",
-    dob: "2005-03-14",
-    address: "12 Lake View Road",
-    city: "Ahmedabad",
-    state: "Gujarat",
-    pincode: "380001",
-    country: "India",
-  },
-  {
-    firstName: "Diya",
-    middleName: "Rajesh",
-    lastName: "Sharma",
-    email: "diya.sharma@example.com",
-    profile: "Diya_Sharma.svg",
-    phone: "9876501002",
-    semester: 2,
-    gender: "female",
-    dob: "2004-07-22",
-    address: "45 Rose Villa, MG Road",
-    city: "Jaipur",
-    state: "Rajasthan",
-    pincode: "302001",
-    country: "India",
-  },
-  {
-    firstName: "Rohan",
-    middleName: "Amit",
-    lastName: "Patel",
-    email: "rohan.patel@example.com",
-    profile: "Rohan_Patel.svg",
-    phone: "9876501003",
-    semester: 3,
-    gender: "male",
-    dob: "2004-01-09",
-    address: "78 Green Avenue",
-    city: "Surat",
-    state: "Gujarat",
-    pincode: "395001",
-    country: "India",
-  },
+// 3 hand-picked demo students (credentials printed at the end) plus a
+// deterministic pool of 65 more, so every branch/semester has a full class.
+const STUDENT_FIRST = [
+  ["Ananya", "female"], ["Arjun", "male"], ["Ishita", "female"],
+  ["Kabir", "male"], ["Myra", "female"], ["Dev", "male"],
+  ["Sana", "female"], ["Reyansh", "male"], ["Aadhya", "female"],
+  ["Vivaan", "male"], ["Navya", "female"], ["Advait", "male"],
+  ["Meera", "female"], ["Yash", "male"], ["Kiara", "female"],
+  ["Atharv", "male"], ["Zara", "female"], ["Dhruv", "male"],
+  ["Ira", "female"], ["Shaurya", "male"], ["Anika", "female"],
+  ["Rudra", "male"], ["Sara", "female"], ["Om", "male"],
+];
+const STUDENT_LAST = ["Nair", "Kulkarni", "Reddy", "Menon", "Bose", "Kapoor", "Joshi", "Malhotra"];
+const STUDENT_MIDDLE = ["Kumar", "Rajesh", "Amit", "Suresh", "Ramesh", "Vijay", "Ashish", "Deepak"];
+const STUDENT_TOWNS = [
+  ["Pune", "Maharashtra", "411001"], ["Jaipur", "Rajasthan", "302001"],
+  ["Surat", "Gujarat", "395001"], ["Chennai", "Tamil Nadu", "600001"],
+  ["Kochi", "Kerala", "682001"], ["Indore", "Madhya Pradesh", "452001"],
+  ["Nagpur", "Maharashtra", "440001"], ["Patna", "Bihar", "800001"],
 ];
 
-const facultyTemplates = [
-  {
-    employeeId: 2001,
-    firstName: "Ritu",
-    lastName: "Sharma",
-    email: "ritu.sharma.faculty@example.com",
-    profile: "Ritu_Sharma.svg",
-    phone: "9876502001",
-    designation: "Associate Professor",
-    gender: "female",
-    dob: "1985-05-12",
-    address: "3 Faculty Quarters",
-    city: "Pune",
-    state: "Maharashtra",
-    pincode: "411001",
-    country: "India",
-  },
-  {
-    employeeId: 2002,
-    firstName: "Suresh",
-    lastName: "Iyer",
-    email: "suresh.iyer.faculty@example.com",
-    profile: "Suresh_Iyer.svg",
-    phone: "9876502002",
-    designation: "Assistant Professor",
-    gender: "male",
-    dob: "1987-09-30",
-    address: "5 Faculty Quarters",
-    city: "Chennai",
-    state: "Tamil Nadu",
-    pincode: "600001",
-    country: "India",
-  },
-  {
-    employeeId: 2003,
-    firstName: "Anita",
-    lastName: "Desai",
-    email: "anita.desai.faculty@example.com",
-    profile: "Anita_Desai.svg",
-    phone: "9876502003",
-    designation: "Professor",
-    gender: "female",
-    dob: "1982-02-18",
-    address: "9 Faculty Quarters",
-    city: "Mumbai",
-    state: "Maharashtra",
-    pincode: "400001",
-    country: "India",
-  },
-  {
-    employeeId: 2004,
-    firstName: "Vikram",
-    lastName: "Nair",
-    email: "vikram.nair.faculty@example.com",
-    profile: "Vikram_Nair.svg",
-    phone: "9876502004",
-    designation: "Assistant Professor",
-    gender: "male",
-    dob: "1989-11-05",
-    address: "11 Faculty Quarters",
-    city: "Kochi",
-    state: "Kerala",
-    pincode: "682001",
-    country: "India",
-  },
+function makeStudentTemplates() {
+  const templates = [
+    {
+      firstName: "Aarav",
+      middleName: "Kumar",
+      lastName: "Mehta",
+      email: "aarav.mehta@example.com",
+      profile: "Aarav_Mehta.svg",
+      phone: "9876501001",
+      semester: 1,
+      gender: "male",
+      dob: "2005-03-14",
+      address: "12 Lake View Road",
+      city: "Ahmedabad",
+      state: "Gujarat",
+      pincode: "380001",
+      country: "India",
+    },
+    {
+      firstName: "Diya",
+      middleName: "Rajesh",
+      lastName: "Sharma",
+      email: "diya.sharma@example.com",
+      profile: "Diya_Sharma.svg",
+      phone: "9876501002",
+      semester: 2,
+      gender: "female",
+      dob: "2004-07-22",
+      address: "45 Rose Villa, MG Road",
+      city: "Jaipur",
+      state: "Rajasthan",
+      pincode: "302001",
+      country: "India",
+    },
+    {
+      firstName: "Rohan",
+      middleName: "Amit",
+      lastName: "Patel",
+      email: "rohan.patel@example.com",
+      profile: "Rohan_Patel.svg",
+      phone: "9876501003",
+      semester: 3,
+      gender: "male",
+      dob: "2004-01-09",
+      address: "78 Green Avenue",
+      city: "Surat",
+      state: "Gujarat",
+      pincode: "395001",
+      country: "India",
+    },
+  ];
+  for (let i = 0; i < 65; i++) {
+    const [firstName, gender] = STUDENT_FIRST[i % STUDENT_FIRST.length];
+    const lastName = STUDENT_LAST[Math.floor(i / STUDENT_FIRST.length) % STUDENT_LAST.length];
+    const middleName = STUDENT_MIDDLE[i % STUDENT_MIDDLE.length];
+    const [city, state, pincode] = STUDENT_TOWNS[i % STUDENT_TOWNS.length];
+    templates.push({
+      firstName,
+      middleName,
+      lastName,
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@example.com`,
+      profile: `${firstName}_${lastName}.svg`,
+      phone: `9876501${100 + i}`,
+      semester: (i % 3) + 1,
+      gender,
+      dob: `200${4 + (i % 3)}-${String(1 + (i % 12)).padStart(2, "0")}-${String(1 + (i % 28)).padStart(2, "0")}`,
+      address: `${100 + i} Campus Hostel`,
+      city,
+      state,
+      pincode,
+      country: "India",
+    });
+  }
+  return templates;
+}
+
+const studentTemplates = makeStudentTemplates();
+
+
+// 4 hand-picked demo teachers plus a deterministic pool of 8 more
+// (spread across branches in the seeding loop below).
+const FACULTY_FIRST = [
+  ["Meena", "female"], ["Arvind", "male"], ["Lakshmi", "female"],
+  ["Priya", "female"], ["Rajesh", "male"], ["Kavita", "female"],
+  ["Sanjay", "male"], ["Deepika", "female"],
 ];
+const FACULTY_LAST = ["Krishnan", "Menon", "Venkat", "Nair", "Gupta", "Joshi", "Reddy", "Raman"];
+const FACULTY_DESIGNATION = ["Professor", "Associate Professor", "Assistant Professor"];
+const FACULTY_TOWNS = [
+  ["Pune", "Maharashtra", "411001"], ["Chennai", "Tamil Nadu", "600001"],
+  ["Kochi", "Kerala", "682001"], ["Mumbai", "Maharashtra", "400001"],
+  ["Bhopal", "Madhya Pradesh", "462001"], ["Delhi", "Delhi", "110001"],
+  ["Kolkata", "West Bengal", "700001"], ["Hyderabad", "Telangana", "500001"],
+];
+
+function makeFacultyTemplates() {
+  const templates = [
+    {
+      employeeId: 2001,
+      firstName: "Ritu",
+      lastName: "Sharma",
+      email: "ritu.sharma.faculty@example.com",
+      profile: "Ritu_Sharma.svg",
+      phone: "9876502001",
+      designation: "Associate Professor",
+      gender: "female",
+      dob: "1985-05-12",
+      address: "3 Faculty Quarters",
+      city: "Pune",
+      state: "Maharashtra",
+      pincode: "411001",
+      country: "India",
+    },
+    {
+      employeeId: 2002,
+      firstName: "Suresh",
+      lastName: "Iyer",
+      email: "suresh.iyer.faculty@example.com",
+      profile: "Suresh_Iyer.svg",
+      phone: "9876502002",
+      designation: "Assistant Professor",
+      gender: "male",
+      dob: "1987-09-30",
+      address: "5 Faculty Quarters",
+      city: "Chennai",
+      state: "Tamil Nadu",
+      pincode: "600001",
+      country: "India",
+    },
+    {
+      employeeId: 2003,
+      firstName: "Anita",
+      lastName: "Desai",
+      email: "anita.desai.faculty@example.com",
+      profile: "Anita_Desai.svg",
+      phone: "9876502003",
+      designation: "Professor",
+      gender: "female",
+      dob: "1982-02-18",
+      address: "9 Faculty Quarters",
+      city: "Mumbai",
+      state: "Maharashtra",
+      pincode: "400001",
+      country: "India",
+    },
+    {
+      employeeId: 2004,
+      firstName: "Vikram",
+      lastName: "Nair",
+      email: "vikram.nair.faculty@example.com",
+      profile: "Vikram_Nair.svg",
+      phone: "9876502004",
+      designation: "Assistant Professor",
+      gender: "male",
+      dob: "1989-11-05",
+      address: "11 Faculty Quarters",
+      city: "Kochi",
+      state: "Kerala",
+      pincode: "682001",
+      country: "India",
+    },
+  ];
+  for (let i = 0; i < 8; i++) {
+    const [firstName, gender] = FACULTY_FIRST[i % FACULTY_FIRST.length];
+    const lastName = FACULTY_LAST[i % FACULTY_LAST.length];
+    const [city, state, pincode] = FACULTY_TOWNS[i % FACULTY_TOWNS.length];
+    templates.push({
+      employeeId: 2005 + i,
+      firstName,
+      lastName,
+      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}.faculty@example.com`,
+      profile: `${firstName}_${lastName}.svg`,
+      phone: `98765020${String(5 + i).padStart(2, "0")}`,
+      designation: FACULTY_DESIGNATION[i % FACULTY_DESIGNATION.length],
+      gender,
+      dob: `198${2 + (i % 7)}-${String(1 + (i % 12)).padStart(2, "0")}-${String(1 + (i % 28)).padStart(2, "0")}`,
+      address: `${13 + i} Faculty Quarters`,
+      city,
+      state,
+      pincode,
+      country: "India",
+    });
+  }
+  return templates;
+}
+
+const facultyTemplates = makeFacultyTemplates();
+
 
 const seedData = async () => {
   try {
@@ -219,25 +311,31 @@ const seedData = async () => {
     }
     const subjectDocs = await Subject.create(subjectInputs);
 
-    // --- Students: 3 per branch (12 total), semesters 1-3 ---
+    // --- Students: 17 per branch (68 total), unique emails, semesters 1-3 ---
+    const STUDENTS_PER_BRANCH = 17;
     let enrollmentNo = 100001;
     const studentDocs = [];
-    for (const branch of branchDocs) {
-      for (const template of studentTemplates) {
-        studentDocs.push({
-          ...template,
-          enrollmentNo: enrollmentNo++,
-          branchId: branch._id,
-          password: STUDENT_PASSWORD,
+    branchDocs.forEach((branch, branchIndex) => {
+      studentTemplates
+        .slice(
+          branchIndex * STUDENTS_PER_BRANCH,
+          (branchIndex + 1) * STUDENTS_PER_BRANCH
+        )
+        .forEach((template) => {
+          studentDocs.push({
+            ...template,
+            enrollmentNo: enrollmentNo++,
+            branchId: branch._id,
+            password: STUDENT_PASSWORD,
+          });
         });
-      }
-    }
+    });
     const createdStudents = await studentDetails.create(studentDocs);
 
-    // --- Faculty: 1 per branch (4 total) ---
+    // --- Faculty: 3 per branch (12 total) ---
     const facultyDocs = facultyTemplates.map((template, index) => ({
       ...template,
-      branchId: branchDocs[index]._id,
+      branchId: branchDocs[index % branchDocs.length]._id,
       joiningDate: new Date("2020-07-01"),
       salary: 75000 + index * 5000,
       status: "active",

@@ -26,10 +26,9 @@ const getAllExamsController = async (req, res) => {
 const addExamController = async (req, res) => {
   try {
     const formData = req.body;
-    if (!req.file) {
-      return ApiResponse.badRequest("Timetable file is required").send(res);
+    if (req.file) {
+      formData.timetableLink = fileToDataUri(req.file);
     }
-    formData.timetableLink = fileToDataUri(req.file);
     const exam = await Exam.create(formData);
     return ApiResponse.success(exam, "Exam Added Successfully!").send(res);
   } catch (error) {
